@@ -1,6 +1,8 @@
 import pygame
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
+from player import Player
+
 
 def main():
     pygame.init()
@@ -10,6 +12,8 @@ def main():
     clock = pygame.time.Clock()
     #delta time
     dt = 0
+    #create player object
+    character = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -21,8 +25,12 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-
+        #make the screen black
         screen.fill("black")
+        
+        #draw the player 
+        character.draw(screen)
+
         pygame.display.flip()
 
         #limit to 60 fps and getting delta time in seconds

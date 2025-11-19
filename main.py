@@ -13,7 +13,7 @@ def main():
     #delta time
     dt = 0
     #create player object
-    character = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+    player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -25,11 +25,14 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
+
+        player.update(dt)
+
         #make the screen black
         screen.fill("black")
         
         #draw the player 
-        character.draw(screen)
+        player.draw(screen)
 
         pygame.display.flip()
 

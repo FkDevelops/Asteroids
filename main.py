@@ -7,6 +7,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from circleshape import CircleShape
+from shot import Shot
 
 
 
@@ -19,6 +20,7 @@ def main():
     #Clock object to keep track of time
     clock = pygame.time.Clock()
     #creating groups for draw and updatable objects
+    shots = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     #group for asteroids
@@ -28,6 +30,8 @@ def main():
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable, )
+    Shot.containers = (shots, drawable, updatable)
+
     #delta time
     dt = 0
     #creating objects
@@ -47,12 +51,18 @@ def main():
 
         #update all objects in this group
         updatable.update(dt)
+       
 
         for a in asteroids:
             if player.collides_with(a) == True:
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+            for shot in shots:
+                if shot.collides_with(a) == True:
+                    log_event("asteroid_shot")
+                    shot.kill()
+                    a.split()
 
 
         #make the screen black
@@ -61,6 +71,8 @@ def main():
         #draw everything in the group
         for item in drawable:
             item.draw(screen)
+        
+        
 
         pygame.display.flip()
 
